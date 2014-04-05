@@ -1,0 +1,7 @@
+INDEX VERSION 1.122+/Users/AmyBear/Desktop/venture/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+1880913952.index
+2277358763.index
+3231901885.index
+2292418788.index
+594354003.index
+1093889929.index
