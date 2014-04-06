@@ -55,7 +55,7 @@
             <a href="index.html"><span id="hdr">Venture</span></a>
             <div onclick="toggleLoginBar();" id="login-icon" style="position: absolute; right: 12px; text-align: right; display: inline;">
                 <div style="position: relative; top: -8px;" class="dropdown">
-                    <span id="hdr"><i class="icon-cog"></i></span>
+                    <span id="hdr"></span>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
             <div class="form-signin container" style="max-width: 500px; padding: 20px 30px; margin: 0 auto;">
                 <form role="form" name="frm" class="form-signin" action="AccountCreationServlet" method="post">
                     <div class="form-group">
-                        <h3>Username already exists. <br />Try a different one.</h3><br /><br />
+                        <h3>Username already exists. <br />Try a different one.</h3><br />
                         <div><input name="username" type="text" class="input-block-level form-control" placeholder="User Name"></div>
                         <div><input name="email" type="text" class="input-block-level form-control" placeholder="Email" ></div>
                         <div><input name="password" type="password" class="input-block-level form-control" placeholder="Password"></div>

@@ -105,6 +105,7 @@ public class DAL {
 	
 	public void setUserRating(User user, int activityId, int rating) {
 		//System.out.println("Setting rating of "+user.loginName+" for activity #"+activityId+" to "+rating);
+		if (user == null) return;
 		try {
 			String update = "INSERT INTO users_activities_log(user_id, activity_id, rating) VALUES(\"" + getUserId(user) + "\", " + "\"" + activityId + "\", \"" + rating + "\")"
 					+ " ON DUPLICATE KEY UPDATE rating="+rating+";";
