@@ -128,8 +128,8 @@
 	<div id="content-wrapper">
         <div id="header">
             <a href="index.html"><span id="hdr">Venture</span></a>
-            <div onclick="toggleLoginBar();" id="login-icon" style="position: absolute; right: 12px; text-align: right; display: inline;">
-                <div style="position: relative; top: -8px;" class="dropdown">
+            <div onclick="toggleLoginBar();" id="login-icon">
+                <div style="position: relative;" class="dropdown">
                     <span id="hdr"><i class="icon-cog"></i></span>
                 </div>
             </div>
@@ -168,8 +168,8 @@
                 </table>
                 <table id="vote-wrapper" style="pointer-events: none; bottom: 45px;">
                     <tr>
-                        <td><!--span id="vote-words-row">Meh...</span><br /--><i class="icon-thumbs-down"></i></td>
-                        <td><!--span id="vote-words-row">Let's go!</span><br /--><i class="icon-thumbs-up"></i></td>
+                        <td><!--span id="vote-words-row">Meh...</span><br /--><i class="icon-cancel"></i></td>
+                        <td><!--span id="vote-words-row">Let's go!</span><br /--><i class="icon-ok"></i></td>
                     </tr>
                 </table>
             </div>

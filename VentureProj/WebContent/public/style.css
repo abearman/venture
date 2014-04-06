@@ -89,6 +89,14 @@ span#hdr {
     font-size: 25pt;
   }
 
+#login-icon {
+	padding: 25px 0;
+	position: absolute;
+	right: 12px;
+	text-align: right;
+	display: inline-block;
+}
+
 span#icon-bar {
     color: rgb(200, 200, 200);
 /*  text-shadow: 2px 2px white, 

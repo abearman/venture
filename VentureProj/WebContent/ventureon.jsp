@@ -18,14 +18,6 @@
             margin-bottom: 15px;
             padding: 7px 9px;
         }
-        body, html, #content-wrapper {
-            height: 100%;
-            overflow: hidden;
-        }
-        div#content:after {
-            display:block;
-            content:"";
-        }
     </style>
 </head>
 
@@ -67,12 +59,12 @@
 				  height="450"
 				  frameborder="0" style="border:0"
 				  src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyCwehTkiWGttVWmKbBYm-V0Lj1UvWCyzXg
-				  &origin=<%=request.getAttribute("latitude")%>,<%=request.getAttribute("longitude")%>
+				  &origin=<%=request.getParameter("latitude")%>,<%=request.getParameter("longitude")%>
 				  &destination=<%=addressURL%>
 				  &mode=<%=modeOfTransit%>" >
 				</iframe>
             </div>
-            <div id="footer" style="position: absolute; bottom:0px; height: 75px;">&copy; Keenon, Jan, Amy, and Alanna</div>
+            <div id="footer">&copy; Keenon, Jan, Amy, and Alanna</div>
         </div>
 	</div>
 </body>
