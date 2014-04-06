@@ -37,6 +37,14 @@ public class GenerateSuggestionsServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+
+		DAL dal = (DAL)getServletContext().getAttribute("DAL");
+		
+		if (request.getParameter("rejectedid") != null) {
+			User user = (User) request.getSession().getAttribute("user");
+			dal.setUserRating(user, Integer.parseInt(request.getParameter("rejectedid")), 0);
+		}
+		
 		double lat = Double.parseDouble((String)request.getParameter("latitude"));
 		double lng = Double.parseDouble((String)request.getParameter("longitude"));
 		
@@ -80,7 +88,6 @@ public class GenerateSuggestionsServlet extends HttpServlet {
 		request.setAttribute("isBars", isBars ? "YES" : "NO");
 		
 		//DO ALL OF THE THINGS
-		DAL dal = (DAL)getServletContext().getAttribute("DAL");
 		System.out.println(isParks + " " + isFood + " " + isMovies + " " + isShopping + " " + isOther);
 		ArrayList<Activity> activities = dal.getSuggestions(lat, lng, boxSize, isParks, isBars, isFood, isMovies, isShopping, isOther);
 		request.setAttribute("latitude", request.getParameter("latitude"));
@@ -93,9 +100,48 @@ public class GenerateSuggestionsServlet extends HttpServlet {
 		}
 		
 		Random generator = new Random();
-		int randomInt = generator.nextInt(activities.size());
 		
-		request.setAttribute("activity", activities.get(randomInt));
+		Activity activity;
+		
+		while (true) {
+			
+			// Do a quick check to make sure that we're not in an infinite-loop case
+			
+			int i;
+			for (i = 0; i < activities.size(); i++) {
+				if (activities.get(i).theme.equals("movie-theatre")) {
+					if (dal.getMovieForTheatre(activities.get(i)).size() != 0) break;
+				}
+				else break;
+			}
+			// It's impossible to find a good match here
+			if (i >= activities.size()-1) {
+				RequestDispatcher dispatch = request.getRequestDispatcher("noSuggestions.jsp");
+				dispatch.forward(request, response);
+				return;
+			}
+			
+			// Otherwise, keep trying until we get a good one
+			
+			int randomInt = generator.nextInt(activities.size());
+			activity = activities.get(randomInt);
+			if (activity.theme.equals("movie-theatre")) {
+				ArrayList<Movie> movies = dal.getMovieForTheatre(activity);
+				if (movies.size() > 0) {
+					int nextRandom = generator.nextInt(movies.size());
+					activity = movies.get(nextRandom);
+					break;
+				}
+			}
+			else break;
+		}
+		
+		double roughDistanceMiles = (Math.sqrt(Math.pow(lat-activity.latitude,2)+Math.pow(lng-activity.longitude,2)))*69;
+		double roughTimeMinutes = roughDistanceMiles;
+		
+		request.setAttribute("", activity);
+		
+		request.setAttribute("activity", activity);
 		RequestDispatcher dispatch = request.getRequestDispatcher("suggestions.jsp");
 		dispatch.forward(request,response);
 	}

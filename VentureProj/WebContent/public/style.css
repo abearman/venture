@@ -11,6 +11,19 @@ a, a:hover {
     text-decoration: none;
 }
 
+.circular-button {
+	margin: 0 auto;
+	height: 200px;
+	width: 200px;
+	border-radius: 100px;
+	background-color: rgba(255, 255, 255, 0.4);
+	transition: background-color 0.5s;
+}
+
+.circular-button:hover {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
 #header {
     position: relative; 
     width: 100%; 
@@ -82,12 +95,17 @@ span#icon-bar {
               -1px -1px rgb(150, 150, 150);*/
   font-size: 20pt;
 }
-    span#icon-bar .selected {
-        color: rgb(100, 150, 100);
-    }
-    span#icon-bar .unselected {
-        color: rgb(200, 200, 200);
-    }
+span#icon-bar {
+	transition: color 0.5s;
+}
+span#icon-bar .selected {
+    color: rgb(100, 150, 100);
+    transition: color 0.5s;
+}
+span#icon-bar .unselected {
+    color: rgb(200, 200, 200);
+    transition: color 0.5s;
+}
 
 #category-group, #transpo-group {
     padding: 5px 5px 5px 8px;
@@ -116,7 +134,7 @@ span#icon-bar {
 #vote-wrapper {
     position: absolute;
     width: 100%;
-    color: black;
+    color: rgba(20,20,20,1.0);
     /*text-shadow: 3px 3px 1px rgba(0, 0, 0, 0.5),
                 -3px 3px 1px rgba(0, 0, 0, 0.5),
                 3px -3px 1px rgba(0, 0, 0, 0.5),
@@ -125,7 +143,7 @@ span#icon-bar {
                 -3px 0px 1px rgba(0, 0, 0, 0.5),
                 0px 3px 1px rgba(0, 0, 0, 0.5),
                 0px -3px 1px rgba(0, 0, 0, 0.5);*/
-    font-size: 40pt;
+    font-size: 50pt;
     font-weight: bold;
     bottom: 5px;
 }

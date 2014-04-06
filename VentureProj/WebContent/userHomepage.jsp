@@ -15,6 +15,7 @@
 		var lat;
 		var lng;
 		var form;
+		
 		function getLocation() {
 		 	if (navigator.geolocation) { 
 				navigator.geolocation.getCurrentPosition(showPosition);
@@ -25,6 +26,7 @@
 			lng.value = position.coords.longitude;
 			form.submit();
 		}
+		
 		window.onload = function() {
 			lat = document.getElementById("latitude");
 			lng = document.getElementById("longitude");
@@ -45,8 +47,8 @@
 					<input type="hidden" id="latitude" name="latitude">	
 					<input type="hidden" id="longitude" name="longitude">
 				</form>	
-				<button id="main1" onclick="getLocation()" class="btn btn-success btn-lg btn-block" > Give me an adventure </button>
-            	<button id="main2" class="btn btn-info btn-lg btn-block">Track my adventure</button>
+				<button id="main1" onclick="getLocation()" class="btn btn-success btn-lg btn-block" >Have an adventure</button>
+            	<button id="main2" href="ShareAdventureServlet" class="btn btn-info btn-lg btn-block">Share an adventure</button>
 			</div>
 			
 			<div id="icon-container"><span id="index">

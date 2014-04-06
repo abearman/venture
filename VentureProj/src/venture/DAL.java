@@ -85,8 +85,70 @@ public class DAL {
 			String update = "INSERT INTO users(username, email, salt) VALUES(\"" + username + "\", " + "\"" + email + "\", \"" + passwordHash + "\");";
 			stmt.executeUpdate(update);
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private int getUserId(User user) {
+		String query = "SELECT id FROM users WHERE username=\""+user.loginName+"\";";
+		try {
+			ResultSet rset = stmt.executeQuery(query);
+			if (rset.next()) {
+				return rset.getInt("id");
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public void setUserRating(User user, int activityId, int rating) {
+		//System.out.println("Setting rating of "+user.loginName+" for activity #"+activityId+" to "+rating);
+		try {
+			String update = "INSERT INTO users_activities_log(user_id, activity_id, rating) VALUES(\"" + getUserId(user) + "\", " + "\"" + activityId + "\", \"" + rating + "\")"
+					+ " ON DUPLICATE KEY UPDATE rating="+rating+";";
+			stmt.executeUpdate(update);
+		} catch (SQLException e) {
 			e.printStackTrace(); 
 		}
+	}
+	
+	public ArrayList<Movie> getMovieForTheatre(Activity theatre) {
+		int now = (new MinuteTime()).minute;
+		String query = "SELECT * FROM movies where movietheatre="+theatre.id+" and starttime > "+(now+20)+" and starttime < "+(now+50);
+
+		ArrayList<Movie> movies = new ArrayList<Movie>();
+		ResultSet rs;
+		try {
+			System.out.println(query);
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String title = rs.getString("title");
+				String genre = rs.getString("theme");
+				int starttime = rs.getInt("starttime");
+				int endtime = rs.getInt("endtime");
+				String rating = rs.getString("rating");
+				String trailer = rs.getString("trailer");
+				if (trailer.contains("youtube")) {
+					trailer = trailer.replace("http://www.youtube.com/watch?v=", "//www.youtube.com/embed/");
+				}
+				else {
+					trailer="";
+				}
+				Movie movie = new Movie(title, genre, rating, trailer, starttime, endtime);
+				movie.address = theatre.address;
+				movie.latitude = theatre.latitude;
+				movie.longitude = theatre.longitude;
+				movies.add(movie);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return movies;
 	}
 	
 	public ArrayList<Activity> getSuggestions(double lat, double lng, double boxSize, boolean isParks, boolean isBars, boolean isFood, boolean isMovies, boolean isShopping, boolean isOther) {
@@ -96,6 +158,8 @@ public class DAL {
 			ResultSet rs = stmt.executeQuery(query);
 			ArrayList<Activity> activities = new ArrayList<Activity>();
 			while(rs.next()) {
+				System.out.println("ResultSet");
+				int id = rs.getInt("id");
 				String title = rs.getString("title");
 				String theme = rs.getString("theme");
 				String address = rs.getString("address");
@@ -121,7 +185,7 @@ public class DAL {
 					phoneNumber = json.getString("phoneNumber");
 				}
 				
-				Activity activity = new Activity(title, address, latitude, longitude, categories, website, phoneNumber, metadata);
+				Activity activity = new Activity(title, id, theme, address, latitude, longitude, categories, website, phoneNumber, metadata);
 				
 				if (theme.equals("restaurant") && isFood) activities.add(activity);
 				if ((theme.equals("nightlife") || theme.equals("casino")) && isBars) activities.add(activity);
