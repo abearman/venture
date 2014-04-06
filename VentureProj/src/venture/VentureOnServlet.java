@@ -43,7 +43,9 @@ public class VentureOnServlet extends HttpServlet {
 		
 		if (request.getParameter("acceptedid") != null) {
 			User user = (User) request.getSession().getAttribute("user");
-			dal.setUserRating(user, Integer.parseInt(request.getParameter("acceptedid")), 1);
+			if (user != null) {
+				dal.setUserRating(user, Integer.parseInt(request.getParameter("acceptedid")), 1);
+			}
 		}
 		
 		// Write the response clean

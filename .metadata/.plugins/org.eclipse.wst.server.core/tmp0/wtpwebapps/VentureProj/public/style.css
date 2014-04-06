@@ -172,8 +172,25 @@ span#event-title {
     font-size: 40pt;
 }
 
+.video-container {
+	position: relative;
+    padding-bottom: 56.25%;
+    height: 0; overflow: hidden;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /*max-width: 400px;
+    min-width: 300px;*/
+    height: 100%;
+    padding: 0 40px 40px 40px;
+}
+
 #map-container {
-    padding: 0 40px;
+	padding: 0 40px;
 /*    position: relative;
     padding: 20%;
     padding-bottom: 75%;
@@ -185,6 +202,8 @@ span#event-title {
         top: 0;
         left: 0;
         width: 100%;
+        /*max-width: 400px;
+	    min-width: 300px;*/
     }
 
 #button-container {
