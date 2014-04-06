@@ -5,8 +5,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
  	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=no", target-densitydpi=device-dpi />
-	<link href='http://fonts.googleapis.com/css?family=Codystar|Lobster|Londrina+Outline' rel='stylesheet' type='text/css'>
-	<link href="icons/css/fontello.css" rel='stylesheet' type="text/css">
+	<link href='http://fonts.googleapis.com/css?family=Codystar|Lobster|Londrina+Outline|Lato' rel='stylesheet' type='text/css'>
+	<link href="public/icons/css/fontello.css" rel='stylesheet' type="text/css">
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="public/style.css" />
     <title>Venture</title>
@@ -49,7 +49,7 @@
             	<button id="main2" class="btn btn-info btn-lg btn-block">Track my adventure</button>
 			</div>
 			<div id="icon-container">
-				<span id="index"><i class="icon-info-circled"></i><i class="icon-user"></i></span>
+				<span id="index"><i class="icon-info"></i><i class="icon-user"></i></span>
 			</div>
 		</div>
 	</div>

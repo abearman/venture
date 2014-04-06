@@ -1,11 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-
+<html>
 <head>
 	<meta content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Venture</title>
 	
 	<style type="text/css">
       body {
@@ -42,28 +42,31 @@
     <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href='http://fonts.googleapis.com/css?family=Fugaz+One' rel='stylesheet' type='text/css'>
-
+	
+	<%
+	String username = (String)request.getParameter("username");
+	%>
+	
+	<title>Create Account</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body style="background-color:#f5f5f5">
 
-	<div class="form-signin container" style="width:400px; padding-left:30px">
-			<form action="LoginServlet" method="post">
-				<h2>Welcome to <span style="font-family:'Fugaz One', cursive;">Venture!</span></h2>
-				<h3> Please log in </h3>
-				<div><input name="username" type="text" class="input-block-level" placeholder="User Name" ></div>
-				<div><input name="password" type="password" class="input-block-level" placeholder="Password" ></div>
-				<button class="btn btn-large btn-primary" type="submit"> Sign in </button>
-			</form>
-			
-		<div style="padding-top:5px"><a href="createAccount.html">Create New Account</a></div>
-		
+	<div class="container">
+		<form style="width:400px" class="form-signin" action="AccountCreationServlet" method="post">
+			<h2 class="form-signin-heading"> Sorry, the name <%= username %> is already in use. </h2>
+			<h3>Please enter another name and password.</h3>
+			<div><input name="username" type="text" class="input-block-level" placeholder="User Name"></div>
+			<div><input name="password" type="password" class="input-block-level" placeholder="Password"></div>
+			<button class="btn btn-large btn-primary" type="submit"> Submit </button>
+			<div><a href="guestHomepage.jsp">Log in as guest</a></div>
+			<div><a href="index.html">Log in</a></div>
+		</form>
 	</div>
-	
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
 
 </body>
 </html>
+
 
 
