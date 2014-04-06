@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII" pageEncoding="US-ASCII"%>
-<%@ page import="venture.Activity" import="venture.Movie" import="venture.MinuteTime" %>
+<%@ page import="venture.Activity" import="venture.Movie" import="venture.MinuteTime" import="org.json.*" import="venture.JSONUtil"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,7 +14,9 @@
 	<%
 		Activity activity = (Activity)request.getAttribute("activity");	
 		request.setAttribute("activity", activity);
-	
+		double lat = Double.parseDouble((String)request.getAttribute("latitude"));
+		double lng = Double.parseDouble((String)request.getAttribute("longitude"));
+		
 		String modeOfTransit = (String)request.getAttribute("modeOfTransit");
 		
 		if (modeOfTransit == null) {
@@ -56,7 +58,7 @@
                 
                 document.getElementById('map-frame').src = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyCwehTkiWGttVWmKbBYm-V0Lj1UvWCyzXg"
 				  +"&origin=<%=request.getAttribute("latitude")%>,<%=request.getAttribute("longitude")%>"
-				  +"&destination=<%=addressURL%>"
+				  +"&destination=<%=addressURL.toString()%>"
 				  +"&mode="+selectedId;
             });
         });
@@ -172,10 +174,36 @@
                 </table>
             </div>
             
+            <%
+            	//String url = "http://maps.googleapis.com/maps/api/distancematrix/json?origins=" + lat +"," + lng + "&destinations=" + addressURL + "&mode=" + modeOfTransit + "&sensor=false&key=AIzaSyCwehTkiWGttVWmKbBYm-V0Lj1UvWCyzXg";	
+            	String url = "http://maps.googleapis.com/maps/api/distancematrix/json?origins=" + lat + "," + lng + "&destinations=" + addressURL + "%20%20%20%20%20%20%20%20%20%20%20%20&mode=" + modeOfTransit + "&sensor=false&%20%20%20%20%20%20%20%20%20%20%20%20key=AIzaSyCwehTkiWGttVWmKbBYm-V0Lj1UvWCyzXg";
+            	System.out.println(url);
+            	JSONObject jsonObj = JSONUtil.readJsonFromUrl(url);
+            	System.out.println(jsonObj);
+            	String distance = null;
+            	String duration = null;
+            	try {
+            		distance = jsonObj.getJSONArray("rows").getJSONObject(0).getJSONArray("elements").getJSONObject(0).getJSONObject("distance").getString("text");
+            		duration = jsonObj.getJSONArray("rows").getJSONObject(0).getJSONArray("elements").getJSONObject(0).getJSONObject("duration").getString("text");
+            		System.out.println(distance);
+            		System.out.println(duration);
+            	}
+            	catch (JSONException e) {
+            		e.printStackTrace();
+            	}
+            	
+            %>
+            
             <div id="event-info">
 	            <div id="event-title-container"><span id="event-title"><%=activity.title%></span></div>
 	            <div id="event-details-container">
-	                <span id="event-dist">2.6 miles | 4.2 minutes away</span><br />
+	                <span id="event-dist">
+	                	<%
+	                		if ((duration != null) && (distance != null)) {%>
+	                			<%=duration%> | <%= distance%> away
+	                		<%}
+	                	%>
+	                </span><br />
 	               	<span id="event-details">
 	             		<% 
 	             			if (activity.website != null) {
@@ -206,7 +234,7 @@
 				  frameborder="0" style="border:0"
 				  src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyCwehTkiWGttVWmKbBYm-V0Lj1UvWCyzXg
 				  &origin=<%=request.getAttribute("latitude")%>,<%=request.getAttribute("longitude")%>
-				  &destination=<%=addressURL%>
+				  &destination=<%=addressURL.toString()%>
 				  &mode=<%=modeOfTransit%>" >
 				</iframe>
             </div>
