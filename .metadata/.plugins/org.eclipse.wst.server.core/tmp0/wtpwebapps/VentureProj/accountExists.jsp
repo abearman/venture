@@ -60,7 +60,6 @@
 			<div><input name="username" type="text" class="input-block-level" placeholder="User Name"></div>
 			<div><input name="password" type="password" class="input-block-level" placeholder="Password"></div>
 			<button class="btn btn-large btn-primary" type="submit"> Submit </button>
-			<div><a href="guestHomepage.jsp">Log in as guest</a></div>
 			<div><a href="index.html">Log in</a></div>
 		</form>
 	</div>
