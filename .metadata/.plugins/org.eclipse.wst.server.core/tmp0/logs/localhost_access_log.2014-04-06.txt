@@ -461,3 +461,9 @@
 0:0:0:0:0:0:0:1 - - [06/Apr/2014:12:57:35 -0700] "GET /VentureProj/icons/css/fontello.css HTTP/1.1" 404 1019
 0:0:0:0:0:0:0:1 - - [06/Apr/2014:12:57:40 -0700] "POST /VentureProj/LoginServlet HTTP/1.1" 200 2160
 0:0:0:0:0:0:0:1 - - [06/Apr/2014:12:57:46 -0700] "POST /VentureProj/GenerateSuggestionsServlet HTTP/1.1" 200 9673
+0:0:0:0:0:0:0:1 - - [06/Apr/2014:12:59:30 -0700] "GET /VentureProj/icons/css/fontello.css HTTP/1.1" 404 1019
+0:0:0:0:0:0:0:1 - - [06/Apr/2014:12:59:34 -0700] "GET /VentureProj/userHomepage.jsp HTTP/1.1" 200 2160
+0:0:0:0:0:0:0:1 - - [06/Apr/2014:12:59:36 -0700] "GET /VentureProj/login.html HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [06/Apr/2014:12:59:36 -0700] "GET /VentureProj/icons/css/fontello.css HTTP/1.1" 404 1019
+0:0:0:0:0:0:0:1 - - [06/Apr/2014:12:59:37 -0700] "GET /VentureProj/createAccount.html HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [06/Apr/2014:12:59:42 -0700] "POST /VentureProj/AccountCreationServlet HTTP/1.1" 200 3604
