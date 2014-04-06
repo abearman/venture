@@ -223,7 +223,9 @@
 	        <% if (activity instanceof Movie && ((Movie)activity).trailer.length() > 0) { %>
 	        <h1><%= ((Movie)activity).starttime.toString() %></h1>
 	        <h3><%=(new MinuteTime()).toString() %> - Leave in <%= ((Movie)activity).starttime.minute - (new MinuteTime()).minute %> minutes</h3>
-	        <iframe width="560" height="315" style="padding-bottom:20px;" src="<%=((Movie)activity).trailer%>" frameborder="0" allowfullscreen></iframe>
+	        <div class="video-container">
+	        	<iframe width="560" height="315" src="<%=((Movie)activity).trailer%>" frameborder="0" allowfullscreen></iframe>
+	        </div>
 	        <% } %>
             
             <div id="map-container">
