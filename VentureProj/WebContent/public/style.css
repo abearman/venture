@@ -23,6 +23,14 @@ a, a:hover {
   text-align: center;
 }
 
+#content #about {
+    font-size: 80pt;
+}
+
+#content-wrapper {
+    width: 100%;
+}
+
 #footer {
     text-align: center;
     background-color: white;
@@ -41,7 +49,9 @@ a, a:hover {
     padding: 10px;
     width: 100%;
     border-bottom: 1px solid rgb(200, 200, 200); 
-    text-align: right;
+    text-align: center;
+  overflow-x: scroll;
+  white-space: nowrap;
 }
 
 span#index {
@@ -72,28 +82,62 @@ span#icon-bar {
               -1px -1px rgb(150, 150, 150);*/
   font-size: 20pt;
 }
-    span#icon-bar #selected {
+    span#icon-bar .selected {
         color: rgb(100, 150, 100);
     }
-    span#icon-bar #unselected {
+    span#icon-bar .unselected {
         color: rgb(200, 200, 200);
     }
 
+#category-group, #transpo-group {
+    padding: 5px 5px 5px 8px;
+    margin: 0 10px;
+    border-radius: 10px;
+    border: 1px solid rgb(200, 200, 200);
+}
+    
 #event-photo-container {
+    position: relative;
     text-align: center;
     overflow: hidden;
     width: 100%;
     height: 200px;
 }
     #event-photo-wrapper {
+        position: relative;
+        margin: 0 auto;
+    }
+    #event-photo-wrapper img {
+        width: 100%;
+        min-width: 600px;
+        min-height: 200px;
+    }
+    
+#vote-wrapper {
+    position: absolute;
+    width: 100%;
+    color: black;
+    /*text-shadow: 3px 3px 1px rgba(0, 0, 0, 0.5),
+                -3px 3px 1px rgba(0, 0, 0, 0.5),
+                3px -3px 1px rgba(0, 0, 0, 0.5),
+                -3px -3px 1px rgba(0, 0, 0, 0.5),
+                3px 0px 1px rgba(0, 0, 0, 0.5),
+                -3px 0px 1px rgba(0, 0, 0, 0.5),
+                0px 3px 1px rgba(0, 0, 0, 0.5),
+                0px -3px 1px rgba(0, 0, 0, 0.5);*/
+    font-size: 40pt;
+    font-weight: bold;
+    bottom: 5px;
+}
+    #vote-wrapper td {
+        width: 50%;
+    }
+    #vote-words-row {
+        font-size: 30pt;
     }
 
-#event-title-container {
-    padding-top: 20px;
-}
-
-#event-details-container {
-    padding-bottom: 20px;
+#event-info {
+    padding: 20px 0;
 }
 
 span#event-title {
@@ -129,7 +173,7 @@ span#event-title {
     padding: 20px;
   }
 
-.btn {
+.btn#main1, .btn#main2{
   border-width: 10px;
 }
 

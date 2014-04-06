@@ -10,18 +10,92 @@
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <link rel="stylesheet" href="public/style.css" />
     <title>Venture</title>
+    
     <script type="text/javascript">
-
         var loginBar;
 
         function toggleLoginBar() {
            loginBar.slideToggle(); 
         }
+        
+        var selectedId;
+        var isParks = <%=request.getAttribute("isParks").equals("YES")%>;
+        var isBars = <%=request.getAttribute("isBars").equals("YES")%>;
+        var isFood = <%=request.getAttribute("isFood").equals("YES")%>;
+        var isMovies = <%=request.getAttribute("isMovies").equals("YES")%>;
+        var isShopping = <%=request.getAttribute("isShopping").equals("YES")%>;
+        var isOther = <%=request.getAttribute("isOther").equals("YES")%>;
+        
+        // radio for modes of transportation
+        $(document).ready(function() {
+            $('.tg').on('click',function() {
+                $('#transpo-group > .tg > i').removeClass('selected').addClass('unselected');
+                $(this).children('i').toggleClass('unselected selected');
+                selectedId = $(this).children('i').attr('id');
+                console.log(selectedId);
+            });
+        });
 
-        window.onload = function() {
-            // initialize here
-            loginBar = $("#login-bar");
-        }
+        // Toggle for categories
+        $(document).ready(function() {
+            $('.cat-i').on('click',function() {
+                $(this).children('i').toggleClass('unselected selected');
+                var selectedCategory = $(this).children('i').attr('id');
+                console.log(selectedCategory);
+                if (selectedCategory === "parks") {
+                	isParks = true;
+                }
+				if (selectedCategory === "bars") {
+                	isBars = true;
+                } 
+				if (selectedCategory === "food") {
+                	isFood = true;
+                } 
+				if (selectedCategory === "movies") {
+                	isMovies = true;
+                }
+				if (selectedCategory === "shopping") {
+                	isShopping = true;
+                } 
+				if (selectedCategory === "other") {
+                	isOther = true;
+                } 
+            });
+        });
+
+    </script>
+    
+    <script>
+    	var suggestionForm;
+    	
+    	function submitForm() {
+    		document.getElementById('transport').value = selectedId;
+    		if (isParks) {
+    			document.getElementById('parksInput').value = "YES";
+    		}
+    		if (isBars) {
+    			document.getElementById('barsInput').value = "YES";
+    		}
+    		if (isFood) {
+    			document.getElementById('foodInput').value = "YES";
+    		}
+    		if (isMovies) {
+    			document.getElementById('moviesInput').value = "YES";
+    		}
+    		if (isShopping) {
+    			document.getElementById('shoppingInput').value = "YES";
+    		}
+    		if (isOther) {
+    			document.getElementById('otherInput').value = "YES";
+    		}
+    		suggestionForm.submit();
+    	}
+    	
+	    window.onload = function() {
+	    	loginBar = $("#login-bar");
+			suggestionForm = document.getElementById("suggestion");
+		}
+    
     </script>
 
 </head>
@@ -29,11 +103,9 @@
 
 	<%
 		Activity activity = (Activity)request.getAttribute("activity");	
+		request.setAttribute("activity", activity);
+	
 		String modeOfTransit = (String)request.getAttribute("modeOfTransit");
-		boolean isHungry = (request.getAttribute("isHungry") != null) ? true : false;
-		boolean isMovie = (request.getAttribute("isMovie") != null) ? true : false;
-		boolean isOutside = (request.getAttribute("isOutside") != null) ? true : false;
-		boolean isArts = (request.getAttribute("isArts") != null) ? true : false;
 		
 		if (modeOfTransit == null) {
 			modeOfTransit = "driving";
@@ -59,35 +131,66 @@
                 </div>
             </div>
         </div>
-        <div id="login-bar">
+                
+       	<div id="login-bar">
             <span id="icon-bar">
-                <span id="category-group"><i class="icon-tree-1" id="unselected" title="Parks"></i> <i class="icon-bar"  id="unselected" title="Bars"></i> <i class="icon-restaurant" id="unselected" title="Food"></i> <i class="icon-cinema"  id="unselected" title="Movies"></i> <i class="icon-shop" id="unselected" title="Shopping"></i> <i class="icon-embassy"  id="unselected" title="Other"></i></span>
-                <span id="transpo-group"><i class="icon-bicycle" id="unselected" title="Bike"></i> <i class="icon-bus" id="unselected" title="Public Transit"></i> <i class="icon-fuel" id="unselected" title="Drive"></i> <i class="icon-pitch"  id="unselected" title="Walk"></i></span>
+                <span id="category-group">
+                
+                    <span class="cat-i"><i class="icon-tree-1 <%= ((String)request.getAttribute("isParks")).equals("YES") ? "selected" : "unselected" %>" title="Parks" id="parks"></i> </span>
+                    <span class="cat-i"><i class="icon-bar <%= ((String)request.getAttribute("isBars")).equals("YES") ? "selected" : "unselected" %>" title="Bars" id="bars"></i> </span>
+                    <span class="cat-i"><i class="icon-restaurant <%= ((String)request.getAttribute("isFood")).equals("YES") ? "selected" : "unselected" %>" title="Food" id="food"></i> </span>
+                    <span class="cat-i"><i class="icon-cinema <%= ((String)request.getAttribute("isMovies")).equals("YES") ? "selected" : "unselected" %>" title="Movies" id="movies"></i> </span>
+                    <span class="cat-i"><i class="icon-shop <%= ((String)request.getAttribute("isShopping")).equals("YES") ? "selected" : "unselected" %>" title="Shopping" id="shopping"></i> </span>
+                    <span class="cat-i"><i class="icon-embassy <%= ((String)request.getAttribute("isOther")).equals("YES") ? "selected" : "unselected" %>" title="Other" id="other"></i></span>
+                </span>
+                <span id="transpo-group">
+                    <span class="tg"><i class="icon-bicycle <%= ((String)request.getAttribute("modeOfTransit")).equals("bicycling") ? "selected" : "unselected" %>" title="Bike" id="bike"></i> </span>
+                    <span class="tg"><i class="icon-bus <%= ((String)request.getAttribute("modeOfTransit")).equals("transit") ? "selected" : "unselected" %>" title="Public Transit" id="transit"></i> </span>
+                    <span class="tg"><i class="icon-fuel <%= ((String)request.getAttribute("modeOfTransit")).equals("driving") ? "selected" : "unselected" %>" title="Drive" id="drive"></i> </span>
+                    <span class="tg"><i class="icon-pitch <%= ((String)request.getAttribute("modeOfTransit")).equals("walking") ? "selected" : "unselected" %>" title="Walk" id="walk"></i></span>
+                </span>
             </span>
         </div>
-		<div id="content" style="width: 100%">
+        
+        <div id="content" style="width: 100%; position: relative;">
             <div id="event-photo-container">
                 <div id="event-photo-wrapper">
                     <img src=<%=imageSrc%> />
                 </div>
+                <table id="vote-under" style="position: absolute; width: 100%; bottom: -100px;">
+                    <tr>
+                        <td><div style="margin: 0 auto; height: 200px; width: 200px; border-radius: 100px; background-color: rgba(255, 255, 255, 0.4);"></div></td>
+                        <td><div style="margin: 0 auto; height: 200px; width: 200px; border-radius: 100px; background-color: rgba(255, 255, 255, 0.4);"></div></td>
+                    </tr>
+                </table>
+                <table id="vote-wrapper">
+                    <tr>
+                        <td><!--span id="vote-words-row">Meh...</span><br /--><a style="color:black;hover:none" onclick="submitForm()"><i class="icon-thumbs-down"></i></a></td>
+                        <td><!--span id="vote-words-row">Let's go!</span><br /--><i class="icon-compass"></i></td>
+                    </tr>
+                </table>
             </div>
-            <div id="event-title-container"><span id="event-title"><%=activity.title%></span></div>
-            <div id="event-details-container">
-                <span id="event-dist">2.6 miles | 4.2 minutes away</span><br />
-               	<span id="event-details">
-             		<% 
-             			if (activity.website != null) {
-             				%><a href="<%=activity.website%>"><%=activity.website%></a><br>
-             			<%}
-             		%>
-             		<% 
-             			if (activity.phoneNumber != null) {
-             				%>| <a href="tel:+1<%=activity.phoneNumber%>"><%=activity.phoneNumber%></a><br>
-             			<%}
-             		%>
-             	</span>
-                <span id="event-addr"><%=activity.address%></span>
-            </div>
+            
+            <div id="event-info">
+	            <div id="event-title-container"><span id="event-title"><%=activity.title%></span></div>
+	            <div id="event-details-container">
+	                <span id="event-dist">2.6 miles | 4.2 minutes away</span><br />
+	               	<span id="event-details">
+	             		<% 
+	             			if (activity.website != null) {
+	             				%><a href="<%=activity.website%>"><%=activity.website%></a><br>
+	             			<%}
+	             		%>
+	             		<% 
+	             			if (activity.phoneNumber != null) {
+	             				%>| <a href="tel:+1<%=activity.phoneNumber%>"><%=activity.phoneNumber%></a><br>
+	             			<%}
+	             		%>
+	             	</span>
+	                <span id="event-addr"><%=activity.address%></span>
+	            </div>
+	        </div> 
+            
             <div id="map-container">
                 <iframe
 				  width="600"
@@ -99,30 +202,22 @@
 				  &mode=<%=modeOfTransit%>" >
 				</iframe>
             </div>
+            
         </div>
         <div id="footer">&copy; Keenon, Jan, Amy, and Alanna</div>
-	</div>
-	
-	<form name="Suggestion" action="GenerateSuggestionsServlet" method="post">
-		<input type="hidden" id="latitude" name="latitude" value="<%=request.getAttribute("latitude")%>">	
-		<input type="hidden" id="longitude" name="longitude" value="<%=request.getAttribute("longitude")%>">
-		<input type="submit" value="Nah, meh"><br>
-		
-		<input type="radio" name="transport" value="walk" <%if (modeOfTransit.equals("walking")) { %>checked <%}%> >I'm walking<br>
-		<input type="radio" name="transport" value="bike" <%if (modeOfTransit.equals("bicycling")) { %>checked <%}%>>I'm biking<br>
-		<input type="radio" name="transport" value="car" <%if (modeOfTransit.equals("driving")) { %>checked <%}%>>I'm driving<br>
-		<input type="radio" name="transport" value="bus" <%if (modeOfTransit.equals("transit")) { %>checked <%}%>>I'm taking the bus<br>
-		
-		<input type="checkbox" name="hungry" value="hungry" <%if (isHungry) { %>checked <%}%>>I'm hungry<br>
-		<input type="checkbox" name="movie" value="movie" <%if (isMovie) { %>checked <%}%>>I want to see a movie<br>
-		<input type="checkbox" name="outside" value="outside" <%if (isOutside) { %>checked <%}%>>I want to go outside<br>
-		<input type="checkbox" name="arts" value="arts" <%if (isArts) { %>checked <%}%>>I'm cultured<br>
-		
-	</form>
-	
-	<form name="logout" action="LogoutServlet" method="post">
-		<input type="submit" value="Log Out">
-	</form>
+      </div>
+      
+        <form name="Suggestion" id="suggestion" action="GenerateSuggestionsServlet" method="post">
+			<input type="hidden" id="latitude" name="latitude" value="<%=request.getAttribute("latitude")%>">	
+			<input type="hidden" id="longitude" name="longitude" value="<%=request.getAttribute("longitude")%>">
+			<input type="hidden" name="transport" id="transport" value="drive"><br>
+			<input type="hidden" name="parks" id="parksInput" value="NO"><br>
+			<input type="hidden" name="bars" id="barsInput" value="NO"><br>
+			<input type="hidden" name="food" id="foodInput" value="NO"><br>
+			<input type="hidden" name="movies" id="moviesInput" value="NO"><br>
+			<input type="hidden" name="shopping" id="shoppingInput" value="NO"><br>
+			<input type="hidden" name="other" id="otherInput" value="NO"><br>	
+		</form>
 
 </body>
 </html>

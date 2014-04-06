@@ -89,8 +89,7 @@ public class DAL {
 		}
 	}
 	
-	public ArrayList<Activity> getSuggestions(double lat, double lng, double boxSize, boolean isHungry, boolean isOutside, boolean isArts) {
-		System.out.println(boxSize);
+	public ArrayList<Activity> getSuggestions(double lat, double lng, double boxSize, boolean isParks, boolean isBars, boolean isFood, boolean isMovies, boolean isShopping, boolean isOther) {
 		try {
 			String query = "SELECT * FROM activities where lat < " + (lat + boxSize) + " AND lat > " + (lat - boxSize) + " AND lng < " + (lng + boxSize) + " AND lng > " + (lng - boxSize)+ ";";
 			System.out.println(query);
@@ -124,17 +123,16 @@ public class DAL {
 				
 				Activity activity = new Activity(title, address, latitude, longitude, categories, website, phoneNumber, metadata);
 				
-				if (!isHungry && !isOutside && !isArts) {
-					if (!categories.contains("Health")) activities.add(activity);
-				} else {
-					if (isHungry) {
-						if (theme.equals("restaurant") || categories.contains("Restaurants") || categories.contains("Food & Beverage Shops")) activities.add(activity);
-					} else if (isOutside) {
-						
-					} else if (isArts) {
-						if (categories.contains("Arts & Entertainment")) activities.add(activity);
-					}
+				if (theme.equals("restaurant") && isFood) activities.add(activity);
+				if ((theme.equals("nightlife") || theme.equals("casino")) && isBars) activities.add(activity);
+				if ((theme.equals("trail") || theme.equals("pool") || theme.equals("golf") || theme.equals("zoo")) && isParks) activities.add(activity);
+				if (theme.equals("movie-theatre") && isMovies) {
+					activities.add(activity);
 				}
+				if (!isParks && !isBars && !isFood && !isMovies && !isShopping && !isOther) {
+					activities.add(activity);
+				}
+				
 			}
 			return activities;
 		} catch (SQLException e) {

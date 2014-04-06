@@ -40,13 +40,14 @@ public class GenerateSuggestionsServlet extends HttpServlet {
 		double lat = Double.parseDouble((String)request.getParameter("latitude"));
 		double lng = Double.parseDouble((String)request.getParameter("longitude"));
 		
-		double boxSize = 0.0;
+		double boxSize = 1.0;
 		
+		request.setAttribute("modeOfTransit", "driving");
 		if (request.getParameter("transport") != null) {
-			boolean isWalk = request.getParameter("transport").equals("walk");
-			boolean isBike = request.getParameter("transport").equals("bike");
-			boolean isDrive = request.getParameter("transport").equals("car");
-			boolean isBus = request.getParameter("transport").equals("bus");
+			boolean isWalk = request.getParameter("transport").equals("walking");
+			boolean isBike = request.getParameter("transport").equals("bicycling");
+			boolean isDrive = request.getParameter("transport").equals("driving");
+			boolean isBus = request.getParameter("transport").equals("transit");
 			
 			if (isWalk) {
 				boxSize = 0.01;
@@ -60,23 +61,28 @@ public class GenerateSuggestionsServlet extends HttpServlet {
 			} else if (isBus) {
 				boxSize = 0.5;
 				request.setAttribute("modeOfTransit", "transit");
-			}
-		} else {
-			boxSize = 1;
-		}
-	
-		boolean isHungry = (request.getParameter("hungry") != null);
-		boolean isMovie = (request.getParameter("movie") != null);
-		boolean isOutside = (request.getParameter("outside") != null);
-		boolean isArts = (request.getParameter("arts") != null);
-		if (isHungry) request.setAttribute("isHungry", "YES"); 
-		if (isMovie) request.setAttribute("isMovie", "YES");
-		if (isOutside) request.setAttribute("isOutside", "YES");
-		if (isArts) request.setAttribute("isArts", "YES");
+			} 
+		} 
+		System.out.println(boxSize);
+		
+		boolean isParks = (request.getParameter("parks") == null || request.getParameter("parks").equals("YES"));
+		boolean isBars = (request.getParameter("bars") == null || request.getParameter("bars").equals("YES"));
+		boolean isFood = (request.getParameter("food") == null || request.getParameter("food").equals("YES"));
+		boolean isMovies = (request.getParameter("movies") == null || request.getParameter("movies").equals("YES"));
+		boolean isShopping = (request.getParameter("shopping") == null || request.getParameter("shopping").equals("YES"));
+		boolean isOther = (request.getParameter("other") == null || request.getParameter("other").equals("YES"));
+		
+		request.setAttribute("isParks", isParks ? "YES" : "NO");
+		request.setAttribute("isFood", isFood ? "YES" : "NO");
+		request.setAttribute("isMovies", isMovies ? "YES" : "NO");
+		request.setAttribute("isShopping", isShopping ? "YES" : "NO");
+		request.setAttribute("isOther", isOther ? "YES" : "NO");
+		request.setAttribute("isBars", isBars ? "YES" : "NO");
 		
 		//DO ALL OF THE THINGS
 		DAL dal = (DAL)getServletContext().getAttribute("DAL");
-		ArrayList<Activity> activities = dal.getSuggestions(lat, lng, boxSize, isHungry, isOutside, isArts);
+		System.out.println(isParks + " " + isFood + " " + isMovies + " " + isShopping + " " + isOther);
+		ArrayList<Activity> activities = dal.getSuggestions(lat, lng, boxSize, isParks, isBars, isFood, isMovies, isShopping, isOther);
 		request.setAttribute("latitude", request.getParameter("latitude"));
 		request.setAttribute("longitude", request.getParameter("longitude"));
 		

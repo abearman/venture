@@ -48,9 +48,11 @@
 				<button id="main1" onclick="getLocation()" class="btn btn-success btn-lg btn-block" > Give me an adventure </button>
             	<button id="main2" class="btn btn-info btn-lg btn-block">Track my adventure</button>
 			</div>
-			<div id="icon-container">
-				<span id="index"><i class="icon-info"></i><i class="icon-user"></i></span>
-			</div>
+			
+			<div id="icon-container"><span id="index">
+                <a href="about.html"><span id="index"><i class="icon-info"></i></span></a>
+                <a href="login.html"><span id="index"><i class="icon-user"></i></span></a>
+        	</span></div>
 		</div>
 	</div>
 	
