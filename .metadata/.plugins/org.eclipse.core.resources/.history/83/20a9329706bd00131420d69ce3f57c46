@@ -1,0 +1,10 @@
+package venture;
+
+public class AccountManager {
+
+	/* Constructor */
+	public AccountManager() {
+		
+	}
+	
+}

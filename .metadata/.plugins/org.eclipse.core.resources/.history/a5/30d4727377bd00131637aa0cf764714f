@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=no", target-densitydpi=device-dpi />
+	<link href='http://fonts.googleapis.com/css?family=Codystar|Lobster|Londrina+Outline|Lato' rel='stylesheet' type='text/css'>
+	<link href="icons/css/fontello.css" rel='stylesheet' type="text/css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css" />
+    <title>Venture</title>
+</head>
+
+<body>
+	<div id="content-wrapper">
+		<div id="content" style="" class="container">
+		    <span id="index">Venture</span>
+		    
+            <div id="button-container"><a href="event.html" id="main1" type="button" class="btn btn-success btn-lg btn-block">Give me an adventure</a>
+			<a href="track.html" type="button" id="main2" class="btn btn-info btn-lg btn-block">Track my adventure</a></div>
+			
+        <div id="icon-container"><span id="index">
+                <a href="about.html"><span id="index"><i class="icon-info"></i></span></a>
+                <a href="login.html"><span id="index"><i class="icon-user"></i></span></a>
+        </span></div>
+		</div>
+	</div>
+</body>
+</html>

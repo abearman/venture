@@ -1,0 +1,9 @@
+package venture;
+
+public class User {
+
+	public User(String loginName, String passwordClear) {
+		// TODO Auto-generated constructor stub
+	}
+
+}

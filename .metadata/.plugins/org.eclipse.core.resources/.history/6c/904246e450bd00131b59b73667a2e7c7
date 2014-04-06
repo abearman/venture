@@ -1,0 +1,67 @@
+
+body {
+  background-color: rgb(240, 240, 240);
+  font-size: 16pt;
+}
+
+a, a:hover {
+    text-decoration: none;
+}
+
+#content {
+  text-align: center;
+}
+
+span#index {
+  font-family: Lobster;
+  color: rgb(200, 200, 200);
+  text-shadow: 2px 2px white, 
+              -1px -1px rgb(150, 150, 150);
+  font-size: 120pt;
+}
+  span#index i {
+    font-size: 120pt;
+  }
+
+span#hdr {
+  font-family: Lobster;
+  color: rgb(200, 200, 200);
+  text-shadow: 2px 2px white, 
+              -1px -1px rgb(150, 150, 150);
+  font-size:45pt;
+}
+  span#hdr i {
+    font-size: 25pt;
+  }
+
+#button-container {
+  width: 50%;
+  margin: 0 auto;
+  padding-bottom: 10px;
+}
+  #button-container .btn {
+    font-size: 25pt;
+    font-family: "Arial";
+    white-space: normal;
+    padding: 20px;
+  }
+
+.btn {
+  border-width: 10px;
+}
+
+#main1 {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    span#index {
+        font-size: 55pt;
+    }
+        span#index i {
+            font-size: 55pt;
+        }
+    #button-container {
+        width: 80%;
+    }
+}

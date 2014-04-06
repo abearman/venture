@@ -1,0 +1,3 @@
+browsers=<?xml version\="1.0" encoding\="UTF-8"?>\n<web-browsers current\="0">\n<system/>\n<external location\="/Applications/Firefox.app" name\="Firefox"/>\n</web-browsers>
+eclipse.preferences.version=1
+internalWebBrowserHistory=http\://localhost\:8080/VentureProj/|*|http\://localhost\:8080/VentureProj/userHomepage.jsp|*|http\://localhost\:8080/VentureProj/GenerateSuggestionsServlet|*|http\://localhost\:8080/VentureProj/LoginServlet|*|http\://localhost\:8080/VentureProj/GenerateSuggestions|*|http\://localhost\:8080/VentureProj/LoginServlet?adventure\=Adventure|*|http\://localhost\:8080/VentureProj/AccountCreationServlet|*|http\://localhost\:8080/VentureProj/createAccount.html|*|http\://localhost\:8080/VentureProj/index.html|*|

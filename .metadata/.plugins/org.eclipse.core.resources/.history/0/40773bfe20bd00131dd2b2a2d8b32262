@@ -1,0 +1,16 @@
+package venture;
+
+import java.util.ArrayList;
+
+public class Activity {
+	
+	public String title;
+	public String address;
+	public double latitude;
+	public double longitude;
+	public ArrayList<String> categories;
+
+	public Activity() {
+		categories = new ArrayList<String>();
+	}
+}

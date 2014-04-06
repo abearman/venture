@@ -1,0 +1,3 @@
+INDEX VERSION 1.126
+/Users/AmyBear/Desktop/venture/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2292418788.index
+/VentureProj/src

@@ -1,0 +1,177 @@
+package venture;
+
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class DAL {
+
+	/* Private instance variables */
+	private DBConnection db;
+	private Statement stmt;
+	
+	/* Constants */
+	public static final double EARTH_CIRCUMFERENCE = 24901;
+	
+	/* Constructor */
+	public DAL() {
+		try {
+			db = new DBConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		stmt = db.getStatement();
+	}
+
+	public Statement getStatement() {
+		return stmt;
+	}
+	
+	public User getUser(String loginName) {
+		User user = new User(loginName);
+		String query = "SELECT * FROM users WHERE username = \"" + loginName + "\";";
+		try {
+			ResultSet rs = stmt.executeQuery(query);
+			rs.next();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
+
+	public boolean accountExists(String loginName) {
+		String query = "SELECT * FROM users WHERE username = \"" + loginName + "\";";
+		try {
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs.next()) { //If there exists a record with this loginName in the database return true
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean isPasswordForAccount(String loginName, String passwordClear, String hashOfAttemptedPassword) {
+		String query = "SELECT * FROM users WHERE username = \"" + loginName + "\";";
+		try {
+			ResultSet rs = stmt.executeQuery(query);
+			rs.next();
+			String databasePasswordHash = rs.getString("salt"); //Retrieves the stored hash from the Database for this User
+			if (hashOfAttemptedPassword.equals(databasePasswordHash)) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public void insertUser(String username, String email, String passwordHash) {
+		try {
+			String update = "INSERT INTO users(username, email, salt) VALUES(\"" + username + "\", " + "\"" + email + "\", \"" + passwordHash + "\");";
+			stmt.executeUpdate(update);
+		} catch (SQLException e) {
+			e.printStackTrace(); 
+		}
+	}
+	
+	public Activity getMovieForTheatre(int theatreID) {
+		int now = Integer.MAX_VALUE;
+		String query = "SELECT * FROM movies where movietheatre="+theatreID+" and starttime < "+now;
+		ResultSet rs;
+		try {
+			ArrayList<Movie> movies = new ArrayList<Movie>();
+			
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String title = rs.getString("title");
+				String genre = rs.getString("theme");
+				int starttime = rs.getInt("starttime");
+				int endtime = rs.getInt("endtime");
+				String rating = rs.getString("rating");
+				String trailer = rs.getString("trailer");
+				Movie movie = new Movie(title, genre, rating, trailer, starttime, endtime);
+				movies.add(movie);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public ArrayList<Activity> getSuggestions(double lat, double lng, double boxSize, boolean isParks, boolean isBars, boolean isFood, boolean isMovies, boolean isShopping, boolean isOther) {
+		try {
+			String query = "SELECT * FROM activities where lat < " + (lat + boxSize) + " AND lat > " + (lat - boxSize) + " AND lng < " + (lng + boxSize) + " AND lng > " + (lng - boxSize)+ ";";
+			System.out.println(query);
+			ResultSet rs = stmt.executeQuery(query);
+			ArrayList<Activity> activities = new ArrayList<Activity>();
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				String title = rs.getString("title");
+				String theme = rs.getString("theme");
+				String address = rs.getString("address");
+				double latitude = rs.getDouble("lat");
+				double longitude = rs.getDouble("lng");
+				String metadata = rs.getString("metadata");
+				
+				String website = null;
+				String phoneNumber = null;
+				ArrayList<String> categories = new ArrayList<String>();
+				
+				JSONObject json = new JSONObject(metadata);
+				if (json.has("categories")) {
+					JSONArray jsonArr = json.getJSONArray("categories");
+					for (int i = 0; i < jsonArr.length(); i++) {
+						categories.add(jsonArr.get(i).toString());
+					}
+				}
+				if (json.has("website")) {
+					website = json.getString("website");
+				}
+				if (json.has("phoneNumber")) {
+					phoneNumber = json.getString("phoneNumber");
+				}
+				
+				Activity activity = new Activity(title, theme, address, latitude, longitude, categories, website, phoneNumber, metadata);
+				
+				if (theme.equals("restaurant") && isFood) activities.add(activity);
+				if ((theme.equals("nightlife") || theme.equals("casino")) && isBars) activities.add(activity);
+				if ((theme.equals("trail") || theme.equals("pool") || theme.equals("golf") || theme.equals("zoo")) && isParks) activities.add(activity);
+				if (theme.equals("movie-theatre") && isMovies) {
+					if (theme.equals("movie-theatre")) {
+						activities.add(getMovieForTheatre(id));
+					}
+					else {
+						activities.add(activity);
+					}
+				}
+				if (!isParks && !isBars && !isFood && !isMovies && !isShopping && !isOther) {
+					activities.add(activity);
+				}
+				
+			}
+			return activities;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+}
