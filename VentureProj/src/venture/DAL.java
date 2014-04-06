@@ -89,8 +89,7 @@ public class DAL {
 		}
 	}
 	
-	public ArrayList<Activity> getSuggestions(double lat, double lng) {
-		double boxSize = 0.01;
+	public ArrayList<Activity> getSuggestions(double lat, double lng, double boxSize, boolean isHungry, boolean isOutside, boolean isArts) {
 		System.out.println(boxSize);
 		try {
 			String query = "SELECT * FROM activities where lat < " + (lat + boxSize) + " AND lat > " + (lat - boxSize) + " AND lng < " + (lng + boxSize) + " AND lng > " + (lng - boxSize)+ ";";
@@ -99,6 +98,7 @@ public class DAL {
 			ArrayList<Activity> activities = new ArrayList<Activity>();
 			while(rs.next()) {
 				String title = rs.getString("title");
+				String theme = rs.getString("theme");
 				String address = rs.getString("address");
 				double latitude = rs.getDouble("lat");
 				double longitude = rs.getDouble("lng");
@@ -123,7 +123,18 @@ public class DAL {
 				}
 				
 				Activity activity = new Activity(title, address, latitude, longitude, categories, website, phoneNumber, metadata);
-				if (categories.contains("Restaurants")) activities.add(activity);
+				
+				if (!isHungry && !isOutside && !isArts) {
+					if (!categories.contains("Health")) activities.add(activity);
+				} else {
+					if (isHungry) {
+						if (theme.equals("restaurant") || categories.contains("Restaurants") || categories.contains("Food & Beverage Shops")) activities.add(activity);
+					} else if (isOutside) {
+						
+					} else if (isArts) {
+						if (categories.contains("Arts & Entertainment")) activities.add(activity);
+					}
+				}
 			}
 			return activities;
 		} catch (SQLException e) {
