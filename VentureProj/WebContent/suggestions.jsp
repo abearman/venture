@@ -240,7 +240,22 @@
             </div>
             
         </div>
-        <div id="footer">&copy; Keenon, Jan, Amy, and Alanna</div>
+        <div id="footer">
+        	<%
+        	if (session.getAttribute("user") != null) {%>
+        		<form name="logout" action="LogoutServlet" method="post">
+	           		<button class="btn btn-large btn-primary" type="submit"> 
+						Log Out
+	           		</button>
+	           		&nbsp; &nbsp; &nbsp; &nbsp; &copy; Keenon, Jan, Amy, and Alanna
+	           	</form>
+        	<% } else {%>
+	           		<a href="login.html"><button class="btn btn-large btn-primary" type="submit"> 
+						Log In
+	           		</button></a>
+	           		&nbsp; &nbsp; &nbsp; &nbsp; &copy; Keenon, Jan, Amy, and Alanna
+        	<%}%>
+        </div>
       </div>
         <form style="display:none" name="Suggestion" id="suggestion" action="GenerateSuggestionsServlet" method="post">
 			<input type="hidden" id="latitude" name="latitude" value="<%=request.getAttribute("latitude")%>">	

@@ -72,6 +72,7 @@ public class GenerateSuggestionsServlet extends HttpServlet {
 			} 
 		} 
 		System.out.println(boxSize);
+		System.out.println(request.getSession().getAttribute("user"));
 		
 		boolean isParks = (request.getParameter("parks") == null || request.getParameter("parks").equals("YES"));
 		boolean isBars = (request.getParameter("bars") == null || request.getParameter("bars").equals("YES"));
