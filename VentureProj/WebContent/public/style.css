@@ -244,4 +244,13 @@ span#event-title {
     #login-bar {
         display: none;
     }
+    
+ 	.circular-button {
+		margin: 0 auto;
+		height: 120px;
+		width: 120px;
+		border-radius: 100px;
+		background-color: rgba(255, 255, 255, 0.4);
+		transition: background-color 0.5s;
+	}
 }

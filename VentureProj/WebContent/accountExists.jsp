@@ -17,14 +17,6 @@
             margin-bottom: 15px;
             padding: 7px 9px;
         }
-        body, html, #content-wrapper {
-            height: 100%;
-            overflow: hidden;
-        }
-        div#content:after {
-            display:block;
-            content:"";
-        }
     </style>
     
     <script type="text/javascript">
@@ -72,7 +64,7 @@
                     </div>
                 </form>
             </div>
-            <div id="footer" style="position: absolute; bottom:0px; height: 75px;">&copy; Keenon, Jan, Amy, and Alanna</div>
+            <div id="footer">&copy; Keenon, Jan, Amy, and Alanna</div>
         </div>
 	</div>
 </body>
